@@ -1,0 +1,78 @@
+package clasesPrograma;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+
+
+action code {:
+   ArrayList<Instruccion> instrucciones = new ArrayList();
+
+:}
+
+parser code {:
+    //esta es la manera en que se puede acceder a un objeto que se genera durante la etapa del parsing
+    public ArrayList<Instruccion> getInstrucciones(){
+    return action_obj.instrucciones;
+    }
+
+    @Override
+    public void syntax_error(Symbol sy) {
+        token t=(token)sy.value;
+        done_parsing();
+        report_error("Error sintáctico cerca de \""+ t.getCadena()+"\" : ["+t.getRow()+" : "+t.getCol()+"]",null);
+    }
+:}
+
+
+/*---------------------------------TERMINALES------------------------------*/
+
+terminal COMA,PCOMA,ABRIRPAR,CERRARPAR,INICIO,FIN,RECTANGULO,CIRCULO,LINEA,ENTER,COLOR;
+terminal token VALINT;
+
+/*-------------------------------NO TERMINALES----------------------------*/
+
+non terminal instrucciones, programa;
+non terminal Instruccion instruccion,<linea>,<circulo>,<rectangulo>,<color>;
+
+/*-------------------------------GRAMATICAS-------------------------------*/
+start with programa;
+
+/*-----------------------ESTRUCTURA DE PROGRAMA---------------------------*/
+programa ::= INICIO ENTER instrucciones ENTER FIN;
+
+/*---------------------DEFINICION DE INSTRUCCIONES--------------------------*/
+instrucciones ::= instrucciones ENTER instruccion| instruccion;
+instruccion ::= circulo|color|linea|rectangulo;
+linea ::= LINEA ABRIRPAR VALINT:a COMA VALINT:b COMA VALINT:c COMA VALINT:d CERRARPAR PCOMA LINEA
+    {:int[] tmp = new int[4];
+    tmp[0]=Integer.parseInt(a.getCadena());
+    tmp[1]=Integer.parseInt(b.getCadena());
+    tmp[2]=Integer.parseInt(c.getCadena());
+    tmp[3]=Integer.parseInt(d.getCadena());
+    instrucciones.add(new Instruccion("linea",tmp));:};
+rectangulo ::= RECTANGULO ABRIRPAR VALINT:a COMA VALINT:b COMA VALINT:c COMA VALINT:d CERRARPAR PCOMA RECTANGULO
+    {:int[] tmp = new int[4];
+    tmp[0]=Integer.parseInt(a.getCadena());
+    tmp[1]=Integer.parseInt(b.getCadena());
+    tmp[2]=Integer.parseInt(c.getCadena());
+    tmp[3]=Integer.parseInt(d.getCadena());
+    instrucciones.add(new Instruccion("rectangulo",tmp));:};
+color ::= COLOR ABRIRPAR VALINT:a COMA VALINT:b COMA VALINT:c CERRARPAR PCOMA COLOR
+    {:int[] tmp = new int[3];
+    tmp[0]=Integer.parseInt(a.getCadena());
+    tmp[1]=Integer.parseInt(b.getCadena());
+    tmp[2]=Integer.parseInt(c.getCadena());
+    instrucciones.add(new Instruccion("color",tmp));:};
+circulo ::= CIRCULO ABRIRPAR VALINT:a COMA VALINT:b COMA VALINT:c CERRARPAR PCOMA CIRCULO
+    {:int[] tmp = new int[3];
+    tmp[0]=Integer.parseInt(a.getCadena());
+    tmp[1]=Integer.parseInt(b.getCadena());
+    tmp[2]=Integer.parseInt(c.getCadena());
+    instrucciones.add(new Instruccion("circulo",tmp));:};
+circulo ::= CIRCULO ABRIRPAR VALINT:a COMA VALINT:b COMA VALINT:c COMA VALINT:d CERRARPAR PCOMA CIRCULO
+    {:int[] tmp = new int[3];
+    tmp[0]=Integer.parseInt(a.getCadena());
+    tmp[1]=Integer.parseInt(b.getCadena());
+    tmp[2]=Integer.parseInt(c.getCadena());
+    tmp[3]=Integer.parseInt(d.getCadena());
+    instrucciones.add(new Instruccion("circulo",tmp));:};

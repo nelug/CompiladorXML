@@ -1,0 +1,7 @@
+<XML>
+<color>(19,251,230)</color>
+<circulo>(10,10,100)</circulo>
+<rectangulo>(10,10,100,100)</rectangulo>
+<color>(33,255,200)</color>
+<linea>(10,10,80,80)</linea>
+</XML>

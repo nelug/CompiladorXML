@@ -1,0 +1,14 @@
+<XML>
+<color>(33,25,200)</color>
+<circulo>(10,10,100)</circulo>
+<circulo>(40,10,100)</circulo>
+<circulo>(70,10,100)</circulo>
+<circulo>(100,10,100)</circulo>
+<linea>(10,120,200,120)</linea>
+<rectangulo>(5,5,200,250)</rectangulo>
+<color>(33,255,200)</color>
+<circulo>(10,140,100)</circulo>
+<circulo>(40,140,100)</circulo>
+<circulo>(70,140,100)</circulo>
+<circulo>(100,140,100)</circulo>
+</XML>
