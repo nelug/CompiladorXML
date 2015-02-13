@@ -6,3 +6,5 @@ usando dos herramientas:
 analisador lexico: jflex
 
 analisador sintactico : cup
+
+Autor: Leonen Madrid
